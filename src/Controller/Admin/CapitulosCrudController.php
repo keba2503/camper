@@ -16,6 +16,8 @@ class CapitulosCrudController extends AbstractCrudController
         return Capitulos::class;
     }
 
+
+    
     
     public function configureFields(string $pageName): iterable
     {
