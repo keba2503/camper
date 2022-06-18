@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista index{% endblock %}
+
+{% block body %}
+    <h1>Lista index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Image</th>
+                <th>Estado</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for listum in listas %}
+            <tr>
+                <td>{{ listum.id }}</td>
+                <td>{{ listum.nombre }}</td>
+                <td>{{ listum.image }}</td>
+                <td>{{ listum.estado ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_lista_show', {'id': listum.id}) }}">show</a>
+                    <a href="{{ path('app_lista_edit', {'id': listum.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_lista_new') }}">Create new</a>
+{% endblock %}
