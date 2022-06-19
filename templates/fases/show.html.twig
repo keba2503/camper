@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}fases Guestbook - {{ fases }}{% endblock %}
+
+{% block body %}
+    <h2>Fase: {{ fases }}</h2>
+
+    {% if capitulos|length > 0 %}
+    
+        <div>Esta Fase tiene {{ capitulos|length }} Capitulos.</div>
+        {% for capitulos in capitulos %}
+            
+
+            <h4> * Capitulo: {{ capitulos.nombre }}</h4>
+            
+
+            <p><strong>Descripción del capitulo: </strong> {{ capitulos.descripcion | striptags('<p>'|raw) }} </p>
+        {% endfor %}
+
+{% if previous >= 0 %}
+            <a href="{{ path('fases', { id: fases.id, offset: previous }) }}">Anterior</a>
+        {% endif %}
+        {% if next < capitulos|length %}
+            <a href="{{ path('fases', { id: fases.id, offset: next }) }}">Siguiente</a>
+        {% endif %}
+
+
+
+    {% else %}
+        <div>No Capituloss have been posted yet for this fases.</div>
+    {% endif %}
+{% endblock %}

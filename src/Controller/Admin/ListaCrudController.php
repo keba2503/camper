@@ -4,10 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Lista;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+
 
 class ListaCrudController extends AbstractCrudController
 {
@@ -17,23 +20,37 @@ class ListaCrudController extends AbstractCrudController
     }
 
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Lista')
+            ->setEntityLabelInPlural('Listas')
+            ->setSearchFields(['nombre', 'image', 'estado']);
+            
+    }
+
+
+
     public function configureFields(string $pageName): iterable
     {
-        return [
-            FormField::addPanel('TipoLista'),
-            AssociationField::new('tipoLista')
-                ->setRequired(true)
-                ->setHelp('Tipo Lista'),
-            FormField::addPanel('Capitulos'),
-            AssociationField::new('capitulos')
-                ->setRequired(true)
-                ->setHelp('Capitulos'),
-            FormField::addPanel('Lista'),
-            TextField::new('nombre'),
-            TextField::new('image'),
-            BooleanField::new('estado')->setColumns(2)
-            
-           
-        ];
+
+        yield  FormField::addPanel('TipoLista');
+        yield    AssociationField::new('tipoLista')
+            ->setRequired(true)
+            ->setHelp('Tipo Lista');
+        yield    FormField::addPanel('Capitulos');
+        yield     AssociationField::new('capitulos')
+            ->setRequired(true)
+            ->setHelp('Capitulos');
+        yield     FormField::addPanel('Lista');
+        yield     TextField::new('nombre');
+        yield    TextField::new('image');
+        yield    BooleanField::new('estado')->setColumns(2);
+
+
+
+    
+
     }
+    
 }

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Fases;
+use App\Repository\CapitulosRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

@@ -6,6 +6,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use App\Entity\TipoLista;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class TipoListaCrudController extends AbstractCrudController
@@ -15,6 +16,13 @@ class TipoListaCrudController extends AbstractCrudController
         return TipoLista::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Tipo')
+            ->setEntityLabelInPlural('Tipos de Lista');          
+            
+    }
     
     public function configureFields(string $pageName): iterable
     {
