@@ -12,22 +12,31 @@ use Twig\Environment;
 
 class FasesController extends AbstractController
 {
+
+    private $twig;
+    
+        public function __construct(Environment $twig)
+        {
+            $this->twig = $twig;
+        }
+
+
     #[Route('/', name: 'homepage')]
-    public function index(Environment $twig, FasesRepository $fasesRepository): Response
+    public function index(FasesRepository $fasesRepository): Response
      {
-        return new Response($twig->render('fases/index.html.twig', [
+        return new Response($this->twig->render('fases/index.html.twig', [
                         'fases' => $fasesRepository->findAll(),
                     ]));
     }
 
 
     #[Route('/fases/{id}', name: 'fases')]
-    public function show(Request $request, Environment $twig, Fases $fases, CapitulosRepository $capitulosRepository): Response
+    public function show(Request $request, Fases $fases, CapitulosRepository $capitulosRepository): Response
     {
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $capitulosRepository->getCapitulosPaginator($fases, $offset);
        
-        return new Response($twig->render('fases/show.html.twig', [
+        return new Response($this->twig->render('fases/show.html.twig', [
             'fases' => $fases,
             'capitulos' => $paginator,
             'previous' => $offset - CapitulosRepository::PAGINATOR_PER_PAGE,
