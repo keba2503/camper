@@ -21,8 +21,7 @@ final class Version20220619114847 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE fases ADD slug VARCHAR(255)');
-                $this->addSql("UPDATE fases SET slug=CONCAT(LOWER(city), '-', year)");
-                $this->addSql('ALTER TABLE fases ALTER COLUMN slug SET NOT NULL');
+                              $this->addSql('ALTER TABLE fases ALTER COLUMN slug SET NOT NULL');
     }
 
     public function down(Schema $schema): void
