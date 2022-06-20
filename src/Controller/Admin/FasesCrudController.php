@@ -30,6 +30,7 @@ class FasesCrudController extends AbstractCrudController
         return [
            
             TextField::new('nombre'),
+            TextField::new('slug'),
             TextEditorField::new('descripcion'),
         ];
     }

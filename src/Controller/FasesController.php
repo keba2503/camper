@@ -1,8 +1,12 @@
 <?php
 
 namespace App\Controller;
+
+use App\Entity\Capitulos;
 use App\Entity\Fases;
+use App\Form\CapitulosFormType;
 use App\Repository\FasesRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CapitulosRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,9 +19,10 @@ class FasesController extends AbstractController
 
     private $twig;
     
-        public function __construct(Environment $twig)
+    public function __construct(Environment $twig, EntityManagerInterface $entityManager)
         {
             $this->twig = $twig;
+            $this->entityManager = $entityManager;
         }
 
 
@@ -30,9 +35,22 @@ class FasesController extends AbstractController
     }
 
 
-    #[Route('/fases/{id}', name: 'fases')]
+    #[Route('/fases/{slug}', name: 'fases')]
     public function show(Request $request, Fases $fases, CapitulosRepository $capitulosRepository): Response
     {
+        $capitulos = New Capitulos();
+        $form = $this->createForm(CapitulosFormType::class, $capitulos);
+
+        $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $capitulos->setFases($fases);
+        
+                    $this->entityManager->persist($capitulos);
+                    $this->entityManager->flush();
+        
+                    return $this->redirectToRoute('fases', ['slug' => $fases->getSlug()]);
+                }
+
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $capitulosRepository->getCapitulosPaginator($fases, $offset);
        
@@ -41,6 +59,7 @@ class FasesController extends AbstractController
             'capitulos' => $paginator,
             'previous' => $offset - CapitulosRepository::PAGINATOR_PER_PAGE,
            'next' => min(count($paginator), $offset + CapitulosRepository::PAGINATOR_PER_PAGE),
+           'capitulos_form' => $form-> createView(),
         ]));
         }
 

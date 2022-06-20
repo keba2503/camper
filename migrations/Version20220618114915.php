@@ -29,13 +29,8 @@ final class Version20220618114915 extends AbstractMigration
         $this->addSql('ALTER TABLE lista ADD CONSTRAINT FK_FB9FEEEDA15EDF03 FOREIGN KEY (capitulos_id) REFERENCES capitulos (id)');
         $this->addSql('ALTER TABLE lista ADD CONSTRAINT FK_FB9FEEEDB1F38C46 FOREIGN KEY (tipo_lista_id) REFERENCES tipo_lista (id)');
         $this->addSql('ALTER TABLE tipo_lista ADD CONSTRAINT FK_FD237425A15EDF03 FOREIGN KEY (capitulos_id) REFERENCES capitulos (id)');
-        $this->addSql('CREATE TABLE sessions (
-                       sess_id VARCHAR(128) NOT NULL PRIMARY KEY,
-                       sess_data BYTEA NOT NULL,
-                    sess_lifetime INTEGER NOT NULL,
-                        sess_time INTEGER NOT NULL
-                    )
-                ');
+       
+               
              
    
     }

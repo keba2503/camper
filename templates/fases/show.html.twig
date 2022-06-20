@@ -18,15 +18,17 @@
         {% endfor %}
 
 {% if previous >= 0 %}
-            <a href="{{ path('fases', { id: fases.id, offset: previous }) }}">Anterior</a>
+            <a href="{{ path('fases', { slug: fases.slug, offset: previous }) }}">Anterior</a>
         {% endif %}
         {% if next < capitulos|length %}
-            <a href="{{ path('fases', { id: fases.id, offset: next }) }}">Siguiente</a>
+            <a href="{{ path('fases', { slug: fases.slug, offset: next }) }}">Siguiente</a>
         {% endif %}
-
-
 
     {% else %}
         <div>No Capituloss have been posted yet for this fases.</div>
     {% endif %}
+
+    <h2>Agregar un capitulo</h2>
+{{ form(capitulos_form) }}
+
 {% endblock %}

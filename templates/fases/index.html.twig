@@ -7,7 +7,7 @@
 
     {% for fase in fases %}
    <p>
-            <a href="{{ path('fases', { id: fase.id }) }}">{{fase.nombre}}</a>
+            <a href="{{ path('fases', { slug: fase.slug }) }}">{{fase.nombre}}</a>
         </p>
     {% endfor %}
 {% endblock %}
