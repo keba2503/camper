@@ -1,34 +1,70 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}fases Guestbook - {{ fases }}{% endblock %}
-
-{% block body %}
-    <h2>Fase: {{ fases }}</h2>
-
-    {% if capitulos|length > 0 %}
-    
-        <div>Esta Fase tiene {{ capitulos|length }} Capitulos.</div>
-        {% for capitulos in capitulos %}
-            
-
-            <h4> * Capitulo: {{ capitulos.nombre }}</h4>
-            
-
-            <p><strong>Descripción del capitulo: </strong> {{ capitulos.descripcion | striptags('<p>'|raw) }} </p>
-        {% endfor %}
-
-{% if previous >= 0 %}
-            <a href="{{ path('fases', { slug: fases.slug, offset: previous }) }}">Anterior</a>
-        {% endif %}
-        {% if next < capitulos|length %}
-            <a href="{{ path('fases', { slug: fases.slug, offset: next }) }}">Siguiente</a>
-        {% endif %}
-
-    {% else %}
-        <div>No Capituloss have been posted yet for this fases.</div>
-    {% endif %}
-
-    <h2>Agregar un capitulo</h2>
-{{ form(capitulos_form) }}
-
+{% block title %}
+    fases Guestbook - 
+    {{ fases }}
 {% endblock %}
+{% block body %}
+    {% for message in app.flashes('notification') %}
+        <div class="alert alert-info alert-dismissible fade show">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">
+                    &times;
+                </span>
+            </button>
+        </div>
+    {% endfor %}
+    <h2 class="mb-5">
+        {{ fases }}
+        Fases
+        
+    </h2>
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            {% if capitulos|length > 0 %}
+                {% for capitulo in capitulos %}
+                    <div class="media shadow border rounded-3 p-3 mb-4">
+                        <div class="media-body">
+                            <h4 class="font-weight-light mb-0">
+                                {{ capitulo.nombre }}
+                            </h4>
+                            <p class="font-weight-light mb-0">
+                                {{ capitulo.descripcion | striptags('<p>'|raw) }}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div>
+                    {{ 'Capitulos'|trans({count: capitulos|length}) }}
+                </div>
+                {% if previous >= 0 %}
+                    <a href="{{ path('fases', { slug: fases.slug, offset: previous }) }}">
+                        Previous
+                    </a>
+                {% endif %}
+                {% if next < capitulos|length %}
+                    <a href="{{ path('fases', { slug: fases.slug, offset: next }) }}">
+                        Next
+                    </a>
+                {% endif %}
+            {% else %}
+                <div class="text-center">
+                    No comments have been posted yet for this conference.
+                            
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="bg-light shadow border rounded-3 p-4">
+                <h3 class="font-weight-light">
+                    Agrega un capitulo
+                            
+                </h3>
+           
+                    {{ form(capitulos_form) }}
+                    
+           
+            </div>
+        </div>
+    {% endblock %}
+    

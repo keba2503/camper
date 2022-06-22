@@ -14,7 +14,7 @@ class CapitulosFormType extends AbstractType
     {
         $builder
             ->add('nombre', null, [
-                'label' => 'Capitulo',
+                'label' => 'Capitulo ', 'label_format' => 'form-control',
             ])
             ->add('descripcion')
             ->add('link')

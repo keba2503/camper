@@ -38,6 +38,10 @@ class FasesController extends AbstractController
     }
 
 
+
+
+
+
     #[Route('/fases/{slug}', name: 'fases')]
     public function show(Request $request, Fases $fases, CapitulosRepository $capitulosRepository, SpamChecker $spamChecker): Response
     {
